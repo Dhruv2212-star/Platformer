@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bylarj03olkad"]
+
+[ext_resource type="AudioStream" uid="uid://ces4o1w372atw" path="res://Assets/prodcrayz--cymatics loop drumless 130bpm.wav" id="1_cs2x5"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" unique_id=65447885]
+stream = ExtResource("1_cs2x5")

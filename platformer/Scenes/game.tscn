@@ -1,9 +1,13 @@
 [gd_scene format=4 uid="uid://1wsgc0h2ysx5"]
 
 [ext_resource type="PackedScene" uid="uid://pbmoqjvodepq" path="res://Scenes/player.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://bwcu2qpfeoda1" path="res://Script/game_manager.gd" id="1_i6g32"]
 [ext_resource type="Texture2D" uid="uid://b6a781wv61dxv" path="res://Assets/Terrain/Terrain (16x16).png" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://b0bifb2muydg2" path="res://Scenes/Winning platform.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://b1on1walxi5y4" path="res://Scenes/Apple.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://dr6wfobic1phd" path="res://Scenes/Death.tscn" id="5_wowpa"]
+[ext_resource type="PackedScene" uid="uid://bylarj03olkad" path="res://Scenes/BG music.tscn" id="7_1l0tm"]
+[ext_resource type="AudioStream" uid="uid://dwtk5ujhwju82" path="res://Assets/apple_collected.mp3" id="8_v158k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -339,13 +343,31 @@ _data = {
 &"Win platform": SubResource("Animation_3dryh")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_v158k"]
+line_spacing = 8.0
+font_size = 32
+font_color = Color(0, 0.7817108, 0.6432315, 1)
+outline_color = Color(0.8138725, 0.16024143, 0.30703664, 1)
+
 [node name="Game" type="Node2D" unique_id=194432431]
+
+[node name="GameManager" type="Node" parent="." unique_id=316662180]
+script = ExtResource("1_i6g32")
+
+[node name="Label2" type="Label" parent="GameManager" unique_id=864909031]
+offset_left = 348.0
+offset_top = -140.0
+offset_right = 478.0
+offset_bottom = -117.0
+text = "Apples collected:"
+horizontal_alignment = 1
 
 [node name="Player" parent="." unique_id=307160696 instance=ExtResource("1_ebmjs")]
 position = Vector2(0, -1)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=425087912]
 zoom = Vector2(2, 2)
+limit_bottom = 100
 position_smoothing_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=837319941]
@@ -359,17 +381,48 @@ position = Vector2(489, -59)
 libraries/ = SubResource("AnimationLibrary_wowpa")
 autoplay = &"Win platform"
 
-[node name="Area2D" parent="." unique_id=288155721 instance=ExtResource("4_3dryh")]
+[node name="Area2D5" parent="." unique_id=1124930756 instance=ExtResource("4_3dryh")]
+position = Vector2(378, -38)
+
+[node name="Death" parent="." unique_id=1633708996 instance=ExtResource("5_wowpa")]
+position = Vector2(138, 61)
+collision_layer = 0
+collision_mask = 2
+
+[node name="Apples" type="Node" parent="." unique_id=1916285211]
+
+[node name="Area2D" parent="Apples" unique_id=288155721 instance=ExtResource("4_3dryh")]
 position = Vector2(155, -21)
 
-[node name="Area2D" parent="Area2D" unique_id=1730236597 instance=ExtResource("4_3dryh")]
-position = Vector2(25, 0)
+[node name="Area2D3" parent="Apples" unique_id=1477512090 instance=ExtResource("4_3dryh")]
+position = Vector2(318, -37)
 
-[node name="Area2D2" parent="Area2D" unique_id=1477512090 instance=ExtResource("4_3dryh")]
-position = Vector2(163, -16)
+[node name="Area2D4" parent="Apples" unique_id=819667548 instance=ExtResource("4_3dryh")]
+position = Vector2(348, -38)
 
-[node name="Area2D2" parent="Area2D/Area2D2" unique_id=819667548 instance=ExtResource("4_3dryh")]
-position = Vector2(30, -1)
+[node name="Area2D2" parent="Apples" unique_id=1730236597 instance=ExtResource("4_3dryh")]
+position = Vector2(180, -21)
 
-[node name="Area2D2" parent="Area2D/Area2D2/Area2D2" unique_id=1124930756 instance=ExtResource("4_3dryh")]
-position = Vector2(30, 0)
+[node name="Label" type="Label" parent="." unique_id=65322789]
+offset_left = 427.0
+offset_top = -87.0
+offset_right = 467.0
+offset_bottom = -64.0
+text = "Finishing stage ! "
+
+[node name="BGM" parent="." unique_id=65447885 instance=ExtResource("7_1l0tm")]
+autoplay = true
+
+[node name="AppleSound" type="AudioStreamPlayer2D" parent="." unique_id=253815642]
+stream = ExtResource("8_v158k")
+area_mask = 2
+
+[node name="LevelCompleteLabel" type="Label" parent="." unique_id=2078422075]
+visible = false
+offset_left = 392.0
+offset_top = -128.0
+offset_right = 673.0
+offset_bottom = -83.0
+scale = Vector2(0.62841225, 1.0608003)
+text = "LEVEL COMPLETE! "
+label_settings = SubResource("LabelSettings_v158k")

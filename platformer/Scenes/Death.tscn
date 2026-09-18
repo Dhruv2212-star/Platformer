@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dr6wfobic1phd"]
+
+[ext_resource type="Script" uid="uid://det573sn0ura0" path="res://Script/death.gd" id="1_e3uyu"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e3uyu"]
+
+[node name="Death" type="Area2D" unique_id=1633708996]
+script = ExtResource("1_e3uyu")
+
+[node name="Timer" type="Timer" parent="." unique_id=428713645]
+wait_time = 0.6
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=807249112]
+shape = SubResource("WorldBoundaryShape2D_e3uyu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
